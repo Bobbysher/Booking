@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+
+
+<div th:fragment="menu" >
+    <a class="mint" style=" text-decoration:none" th:href="@{/}">Home</a>
+    <th:block sec:authorize="hasAuthority('USER')">
+
+        <a  style=" text-decoration:none" class="purples" th:href="@{/user/bucket}">
+            My booking
+        </a>
+    </th:block>
+    <th:block sec:authorize="hasAuthority('ADMIN')">
+        <a style=" text-decoration:none" class="purples" th:href="@{/admin/orderList}">
+            Booked rooms
+        </a>
+    </th:block>
+    <th:block sec:authorize="hasAuthority('ADMIN')">
+        <a class="mint" style=" text-decoration:none" th:href="@{/admin/createProduct}">
+            Create
+        </a>
+
+    </th:block>
+</div>
+
+</html>

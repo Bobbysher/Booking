@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Кoom is booked</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:insert="fragments/header.html :: header"></div>
+<div class="m" th:insert="fragments/menu.html :: menu"></div>
+
+<div class="purples">The room is booked. Don't forget your passport. Enjoy your stay!</div>
+<div class="container">
+  <h3 class="blue">Thank you for trusting us</h3>
+  <h3 class="r2"> Booking number:</h3> <span th:utext="${order.getOrderNum()}"></span>
+</div>
+
+<br/>
+<br/>
+<hr/>
+
+<div th:insert="fragments/footer.html :: footer"></div>
+
+</body>
+</html>

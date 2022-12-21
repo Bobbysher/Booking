@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My booking</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:insert="fragments/header.html :: header"></div>
+<div class="m" th:insert="fragments/menu.html :: menu"></div>
+
+
+<th:block th:if="${isEmpty}">
+  <h2 class="r3">You haven't booked any rooms!</h2>
+  <a style=" text-decoration:none" class="purples" th:href="@{/}">Book now</a>
+</th:block>
+
+<th:block th:if="${!isEmpty}">
+  <form method="POST" th:object="${bucket}" th:action="@{/user/bucket}">
+  <div class="product-list">
+    <div class="product-preview-container"
+         th:each="bucketItem, varStatus: ${bucket.getBucketItems()}">
+      <ul>
+
+        <li style="text-align: center">
+          <img class="product-image"
+               th:src="${bucketItem.getProduct().getImgName()}" />
+        </li>
+
+        <li class="grays">Name: <span  th:utext="${bucketItem.getProduct().getTitle()}"></span></li>
+
+        <li class="grays">Price:
+          <span class="price" th:utext="${bucketItem.getProduct().getPrice()} + ' rub'"></span>
+        </li>
+
+       <!-- <li class="grays" >Колличество:
+          <span class="price" th:utext="${bucketItem.getQuantity()}"></span>
+        </li> -->
+
+        <li>
+        <div th:switch="${bucketItem.getProduct().getAmount()}">
+          <p th:case="${0}" style="purples" >The last room!</p>
+          <!--<a th:case="*" th:href="@{/user/bucket/addProduct(productId = ${bucketItem.getProduct().getId()})}">
+            Добавить экземпляр
+          </a> -->
+        </div>
+        </li>
+
+
+        <li>
+          <a class="r" style=" text-decoration:none" th:href="@{/user/bucket/reduceProduct(productId = ${bucketItem.getProduct().getId()})}">
+            Cancel booking
+          </a>
+        </li>
+
+        <li>Total
+          <span class="subtotal"
+                th:utext="${bucketItem.calculateTotalSum()} + ' rub'">
+                        </span>
+        </li>
+        <!-- <li>
+          <a th:href="@{/user/bucket/removeProduct(productId = ${bucketItem.getProduct().getId()})}">
+            Удалить товар
+          </a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+
+    <div style="clear: both"></div>
+      <!--<input type="submit" value="Delete" />-->
+    <button><span class="r3">Delete</span></button>
+    <a class="navi-item" style=" text-decoration:none"
+       th:href="@{/user/bucketConfirmation}">Checkout</a>
+   <!-- <a class="navi-item"
+       th:href="@{/}">Продолжить покупки</a>-->
+  </form>
+</th:block>
+
+<br/>
+<br/>
+<hr/>
+
+<div th:insert="fragments/footer.html :: footer"></div>
+
+</body>
+</html>
+
+<!--
+th:name="|bucketItem[${varStatus.index}].quantity|"-->

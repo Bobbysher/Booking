@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title> Confirmation</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:insert="fragments/header.html :: header"></div>
+<div class="m" th:insert="fragments/menu.html :: menu"></div>
+
+<div class ="r3">Confirmation</div>
+<div class="customer-info-container">
+  <h3 class="grays">Information about the guest:</h3>
+  <ul>
+    <li class ="blue">Name: <span class="mint" th:utext="${bucket.getUser().getName()}"></span></li>
+    <li class ="blue">Email: <span class="mint" th:utext="${bucket.getUser().getEmail()}"></span></li>
+  </ul>
+  <h3 class="grays" >Total:</h3>
+  <ul>
+    <!--<li>Колличество товаров: <span th:utext="${bucket.getAmountOfProducts()}"></span> Билетов</li>-->
+    <li>
+      <span class="total"
+            th:utext=" ${bucket.getSum()} + ' rub'">
+               </span>
+    </li>
+  </ul>
+</div>
+
+<form method="POST" th:action="@{/user/bucketConfirmation}">
+  <a class="navi-item" th:href="@{/user/bucket}" style=" text-decoration:none">
+    Edit
+  </a>
+
+  <input type="submit" value=" Confirm " class="custom-btn btn-6" />
+</form>
+
+
+<div class="product-list">
+  <div class="product-preview-container"
+       th:each="bucketItem : ${bucket.getBucketItems()}">
+    <ul>
+      <li style="text-align: center">
+        <img class="product-image"
+             th:src="${bucketItem.getProduct().getImgName()}" />
+      </li>
+
+      <li class ="blue">Name: <span th:utext="${bucketItem.getProduct().getTitle()}"></span></li>
+
+      <li class ="blue" >Price:
+        <span class="price" th:utext="${bucketItem.getProduct().getPrice()} + ' rub'"></span>
+      </li>
+
+     <!-- <li>Колличество:
+        <span class="price" th:utext="${bucketItem.getQuantity()}"></span>
+      </li>-->
+
+     <!-- <li>Total:
+        <span class="subtotal"
+              th:utext="${bucketItem.calculateTotalSum()} + 'р'">
+                        </span>
+      </li>-->
+    </ul>
+  </div>
+</div>
+
+<!--<div class="container">
+  <div class="product-preview-container" th:each="cartLineInfo : ${myCart.cartLines}">
+    <ul>
+      <li>
+        <img class="product-image"
+             src="@{|/productImage?code=${cartLineInfo.productInfo.code}|}" />
+      </li>
+      <li>
+        Code: <span th:utext="${cartLineInfo.productInfo.code}"></span>
+        <input
+                type="hidden" name="code" th:value="${cartLineInfo.productInfo.code}" />
+      </li>
+      <li>Name: <span th:utext="${cartLineInfo.productInfo.name}"></span></li>
+      <li>Price:
+        <span class="price"
+              th:utext="${#numbers.formatDecimal(cartLineInfo.productInfo.price,3,2,'COMMA')}">
+                  </span>
+      </li>
+      <li>Quantity: <span th:utext="${cartLineInfo.quantity}"></span></li>
+      <li>Subtotal:
+        <span class="subtotal"
+              th:utext="${#numbers.formatDecimal(cartLineInfo.amount,3,2,'COMMA')}">
+                  </span>
+      </li>
+    </ul>
+  </div>
+</div>-->
+
+<br/>
+<br/>
+<hr/>
+
+<div th:insert="fragments/footer.html :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+
+<body>
+
+<div th:fragment="header" class="header-container">
+
+    <div class="purples1">Hotel Arcteria</div>
+
+    <div >
+        <th:block sec:authorize="isAuthenticated()">
+            Glad to see you,
+<!--            <a th:href="@{/accountInfo}" th:utext="${#request.userPrincipal.name} + '!' ">..</a>-->
+            <span class ="mint" th:utext="  ${#request.userPrincipal.name} + '!' "> userName</span>
+        </th:block>
+    </div>
+    <div >
+        <th:block sec:authorize="isAuthenticated()">
+            <a class="purples" style=" text-decoration:none" th:href="@{/logout}">Exit</a>
+        </th:block>
+    </div>
+
+    <div class ="header-reg">
+        <th:block sec:authorize="!isAuthenticated()">
+            <a class="blue" th:href="@{/login}" style=" text-decoration:none">Log In</a>
+            <a class="r" th:href="@{/registration}" style=" text-decoration:none">Registration</a>
+        </th:block>
+        </div >
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booked rooms</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:insert="fragments/header.html :: header"></div>
+<div th:insert="fragments/menu.html :: menu"></div>
+
+
+<!--<div>Number of occupied rooms:   <span th:utext="${orderList.size()}"></span></div>-->
+<br/>
+<table border="3" style="width:100%" >
+    <caption>Number of occupied rooms:   <span th:utext="${orderList.size()}"></span></caption>
+    <tr>
+        <th>Number</th>
+        <th>Start date</th>
+        <th>Login</th>
+        <th>Email </th>
+        <th>Quantity days</th>
+        <th>Sum</th>
+        <th>Inform</th>
+    </tr>
+    <tr th:each="order : ${orderList}">
+        <td class="purples" th:utext="${order.getOrder().getOrderNum()}"></td>
+        <td class="purples"th:utext="${#dates.format(order.getOrder().getCreationTime(),'dd-MM-yyyy HH:mm')}"></td>
+        <td class="purples"th:utext="${order.getOrder().getUser().getName()}"></td>
+        <td class="purples"th:utext="${order.getOrder().getUser().getEmail()}"></td>
+        <td class="purples"style="color:red;" th:utext="${order.getTotalAmountOfTicketsAtOrder()}">
+        <td class="purples"style="color:blue;" th:utext="${order.getOrder().getTotalSum()} + ' rub'">
+        </td>
+        <td><a class="purples" style=" text-decoration:none" th:href="@{/admin/orderInfo(orderId=${order.getOrder().getId()})}">Open</a></td>
+    </tr>
+</table>
+<!--
+<div class="page-navigator" th:if="${paginationResult.totalPages > 1}" >
+    <th:block th:each="page: ${paginationResult.navigationPages}">
+        <a th:if="${page != -1}" class="nav-item"
+           th:href="@{|/admin/orderList?page=${page}|}" th:utext="${page}"></a>
+
+        <span th:if="${page == -1}" class="nav-item"> ... </span>
+    </th:block>
+</div>
+-->
+
+<br/>
+<br/>
+<hr/>
+
+<div th:insert="fragments/footer.html :: footer"></div>
+
+</body>
+</html>

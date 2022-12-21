@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Information </title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:insert="fragments/header.html :: header"></div>
+<div th:insert="fragments/menu.html :: menu"></div>
+
+<div class="purples">Information about order</div>
+
+<div class="customer-info-container">
+    <h3 class="blue" >Information about the guest:</h3>
+    <ul>
+        <li>Name: <span class="purples" th:utext="${orderInfo.getOrder().getUser().getName()}"></span></li>
+        <li>Email: <span class="purples" th:utext="${orderInfo.getOrder().getUser().getEmail()}"></span></li>
+    </ul>
+
+    <h3 class="blue">Total:</h3>
+    <ul>
+      <!--  <li>Колличество товаров: <span th:utext="${orderInfo.getTotalAmountOfTicketsAtOrder()}"></span> Билетов</li> -->
+        <li>Total:
+            <span class="total"
+                  th:utext=" ${orderInfo.getOrder().getTotalSum()} + ' rub'">
+               </span>
+        </li>
+    </ul>
+
+</div>
+<br/>
+<table border="1" style="grays">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Result</th>
+    </tr>
+    <tr th:each="orderDetailInfo : ${orderInfo.getOrder().getOrderDetails()}">
+        <td th:utext="${orderDetailInfo.getProduct().getTitle()}"></td>
+        <td th:utext="${orderDetailInfo.getProduct().getPrice()}"></td>
+        <td style="color:red;" th:utext="${orderDetailInfo.getQuantity()}"></td>
+        <td th:utext="${orderDetailInfo.getTotalSum()}"></td>
+    </tr>
+</table>
+
+<br/>
+<br/>
+<hr/>
+
+<div th:insert="fragments/footer.html :: footer"></div>
+
+</body>
+</html>
