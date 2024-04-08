@@ -8,3 +8,5 @@ After building and compiling the project, run the command "mvn spring-boot:run"
 In the browser, you need to register http://localhost:8081/
 
 Hotel Arcteria on your screen!
+
+You can install Ultimate version IntelliJ IDEA it's more quickly to start.
